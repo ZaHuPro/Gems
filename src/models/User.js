@@ -1,5 +1,5 @@
 
-module.exports = function (sequelize, DataTypes) {
+module.exports = function Model(sequelize, DataTypes) {
     const User = sequelize.define('user', {
         id: {
             type: DataTypes.UUID,
@@ -59,7 +59,7 @@ module.exports = function (sequelize, DataTypes) {
         freezeTableName: true,
     });
 
-    User.associate = function (db) {
+    User.associate = function associate(db) {
         db.User.hasMany(db.Key, { foreignKey: 'keyed', sourceKey: 'id' });
         db.User.hasMany(db.LoginToken, { foreignKey: 'logger', sourceKey: 'id' });
     };

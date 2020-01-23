@@ -1,18 +1,19 @@
 // /**
 //  * Defines all the GraphQL Midware
 //  */
-import { ApolloServer } from 'apollo-server';
+// import { ApolloEngine } from 'apollo-engine';
+import { ApolloServer } from 'apollo-server-express';
 import { makeExecutableSchema } from 'graphql-tools';
 import Log from './Log';
 import typeDefs from '../graphql/typeDefs';
 import resolvers from '../graphql/resolver';
 import context from '../graphql/context';
-import Locals from './Locals';
+// import Locals from './Locals';
 
 global.fetch = require('node-fetch');
 
 class GraphQL {
-    static mount() {
+    static mount(app) {
         Log.info("Booting the 'GraphQL' middleware...");
 
         const schema = makeExecutableSchema({
@@ -37,29 +38,39 @@ class GraphQL {
             // Always enable GraphQL playground and schema introspection, regardless of NODE_ENV value.
             introspection: true,
             playground: true,
+            tracing: true,
+            cacheControl: true,
+            // We set `engine` to false, so that the new agent is not used.
+            engine: false,
         };
 
-        const API_KEY = Locals.config().appSecret;
-        if (typeof API_KEY !== 'undefined') {
-            options.engine = {
-                apiKey: API_KEY,
-                generateClientInfo: ({ request }) => {
-                    const headers = request.http && request.http.headers;
-                    if (headers) {
-                        return {
-                            clientName: headers['apollo-client-name'],
-                            clientVersion: headers['apollo-client-version'],
-                        };
-                    }
-                    return {
-                        clientName: 'Unknown Client',
-                        clientVersion: 'Unversioned',
-                    };
-                },
-            };
-        }
+        // const API_KEY = Locals.config().engineKey;
+        // if (typeof API_KEY !== "undefined") {
+        // options.engine = {
+        //   apiKey: API_KEY,
+        //   schemaTag: 'development',
+        //   generateClientInfo: ({ request }) => {
+        //     const headers = request.http && request.http.headers;
+        //     if (headers) {
+        //       return {
+        //         clientName: headers["apollo-client-name"],
+        //         clientVersion: headers["apollo-client-version"]
+        //       };
+        //     }
+        //     return {
+        //       clientName: "Unknown Client",
+        //       clientVersion: "Unversioned"
+        //     };
+        //   }
+        // };
+        //       }
 
-        return new ApolloServer(options);
+        const server = new ApolloServer(options);
+        server.applyMiddleware({ app });
+        // return new ApolloEngine({
+        //     apiKey: API_KEY,
+        // });
+        return app;
     }
 }
 

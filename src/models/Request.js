@@ -1,5 +1,5 @@
 
-module.exports = function (sequelize, DataTypes) {
+module.exports = function Model(sequelize, DataTypes) {
     const Request = sequelize.define('request', {
         id: {
             type: DataTypes.UUID,
@@ -52,7 +52,7 @@ module.exports = function (sequelize, DataTypes) {
         freezeTableName: true,
     });
 
-    Request.associate = function (db) {
+    Request.associate = function associate(db) {
         db.Request.belongsTo(db.Key, { foreignKey: 'requester', sourceKey: 'id' });
     };
     return Request;

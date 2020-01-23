@@ -1,5 +1,5 @@
 
-module.exports = function (sequelize, DataTypes) {
+module.exports = function Model(sequelize, DataTypes) {
     const Key = sequelize.define('key', {
         id: {
             type: DataTypes.UUID,
@@ -41,7 +41,7 @@ module.exports = function (sequelize, DataTypes) {
         freezeTableName: true,
     });
 
-    Key.associate = function (db) {
+    Key.associate = function associate(db) {
         db.Key.belongsTo(db.User, { foreignKey: 'keyed', sourceKey: 'id' });
         db.Key.hasMany(db.Request, { foreignKey: 'requester', sourceKey: 'id' });
     };

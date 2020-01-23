@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import DB from '../providers/Database';
 import authyModule from './authy';
 
@@ -13,7 +14,8 @@ class UserModule {
     }
 
     static async fetchUserData(conditions) {
-        const returnData = await DB.models.User.findOne(conditions).then((userIs) => (userIs.id ? userIs.dataValues : {}));
+        const returnData = await DB.models.User.findOne(conditions)
+            .then((userIs) => (userIs.id ? userIs.dataValues : {}));
         return returnData;
     }
 

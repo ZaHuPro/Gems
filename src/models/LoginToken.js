@@ -1,5 +1,5 @@
 
-module.exports = function (sequelize, DataTypes) {
+module.exports = function Model(sequelize, DataTypes) {
     const LoginToken = sequelize.define('login_token', {
         id: {
             type: DataTypes.UUID,
@@ -38,7 +38,7 @@ module.exports = function (sequelize, DataTypes) {
         freezeTableName: true,
     });
 
-    LoginToken.associate = function (db) {
+    LoginToken.associate = function associate(db) {
         db.LoginToken.belongsTo(db.User, { foreignKey: 'logger', sourceKey: 'id' });
     };
     return LoginToken;

@@ -35,6 +35,9 @@ class Locals {
         );
         const jwtExpiresIn = process.env.JWT_EXPIRES_IN || 3;
 
+        // GraphQL Engine Key
+        const engineKey = process.env.ENGINE_API_KEY || 'service:Gems:x9P4dFeExmyCMYBmS7gFng';
+
         return {
             env,
             appSecret,
@@ -49,6 +52,7 @@ class Locals {
             port,
             url,
             root,
+            engineKey,
         };
     }
 }
