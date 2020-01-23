@@ -1,8 +1,8 @@
 import * as path from 'path';
 import * as dotenv from 'dotenv';
 
-import Express from './Express';
-import Log from '../middlewares/Log';
+import Server from './Server';
+import Log from './Log';
 import DB from './Database';
 
 class App {
@@ -26,7 +26,7 @@ class App {
     // Loads Express Server
     static loadServer() {
         Log.info('Server :: Booting...');
-        return Express.init();
+        return Server.init();
     }
 }
 

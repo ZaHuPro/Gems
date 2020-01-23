@@ -1,6 +1,6 @@
 
 module.exports = function (sequelize, DataTypes) {
-    var Key = sequelize.define('key', {
+    const Key = sequelize.define('key', {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
@@ -11,15 +11,15 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notEmpty: true
-            }
+                notEmpty: true,
+            },
         },
         website: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notEmpty: true
-            }
+                notEmpty: true,
+            },
         },
         key: {
             type: DataTypes.UUID,
@@ -32,18 +32,18 @@ module.exports = function (sequelize, DataTypes) {
             values: [
                 'active',
                 'inactive',
-                'removed'
+                'removed',
             ],
-            defaultValue: 'active'
+            defaultValue: 'active',
         },
     }, {
         timestamps: true,
-        freezeTableName: true
+        freezeTableName: true,
     });
 
     Key.associate = function (db) {
-        db.Key.belongsTo(db.User,{ foreignKey: "keyed", sourceKey: "id" });
-        db.Key.hasMany(db.Request,{ foreignKey: "requester", sourceKey: "id" });
-    }
+        db.Key.belongsTo(db.User, { foreignKey: 'keyed', sourceKey: 'id' });
+        db.Key.hasMany(db.Request, { foreignKey: 'requester', sourceKey: 'id' });
+    };
     return Key;
-}
+};

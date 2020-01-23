@@ -1,6 +1,6 @@
 
 module.exports = function (sequelize, DataTypes) {
-    var User = sequelize.define('user', {
+    const User = sequelize.define('user', {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
@@ -9,37 +9,37 @@ module.exports = function (sequelize, DataTypes) {
         },
         first_name: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: true,
         },
         last_name: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: true,
         },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true,
             validate: {
-                notEmpty: true
-            }
+                notEmpty: true,
+            },
         },
         password: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notEmpty: true
-            }
+                notEmpty: true,
+            },
         },
         salt: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notEmpty: true
-            }
+                notEmpty: true,
+            },
         },
         email_verify: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
+            defaultValue: false,
         },
         joined_ip: {
             type: DataTypes.STRING,
@@ -50,18 +50,18 @@ module.exports = function (sequelize, DataTypes) {
             values: [
                 'active',
                 'inactive',
-                'suspended'
+                'suspended',
             ],
-            defaultValue: 'active'
+            defaultValue: 'active',
         },
     }, {
         timestamps: true,
-        freezeTableName: true
+        freezeTableName: true,
     });
 
     User.associate = function (db) {
-        db.User.hasMany(db.Key,{ foreignKey: "keyed", sourceKey: "id" });
-        db.User.hasMany(db.LoginToken,{ foreignKey: "logger", sourceKey: "id" });
-    }
+        db.User.hasMany(db.Key, { foreignKey: 'keyed', sourceKey: 'id' });
+        db.User.hasMany(db.LoginToken, { foreignKey: 'logger', sourceKey: 'id' });
+    };
     return User;
-}
+};

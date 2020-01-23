@@ -1,6 +1,6 @@
 
 module.exports = function (sequelize, DataTypes) {
-    var Request = sequelize.define('request', {
+    const Request = sequelize.define('request', {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
@@ -11,15 +11,15 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notEmpty: true
-            }
+                notEmpty: true,
+            },
         },
         url: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notEmpty: true
-            }
+                notEmpty: true,
+            },
         },
         method: {
             type: DataTypes.ENUM,
@@ -29,31 +29,31 @@ module.exports = function (sequelize, DataTypes) {
                 'DELETE',
                 'POST',
             ],
-            defaultValue: 'GET'
+            defaultValue: 'GET',
         },
         useragent: {
             type: DataTypes.JSON,
-            defaultValue: {}, 
+            defaultValue: {},
         },
         data: {
             type: DataTypes.JSON,
-            defaultValue: {}
+            defaultValue: {},
         },
         code: {
             type: DataTypes.INTEGER,
-            allowNull: true
+            allowNull: true,
         },
         message: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: true,
         },
     }, {
         timestamps: true,
-        freezeTableName: true
+        freezeTableName: true,
     });
 
     Request.associate = function (db) {
-        db.Request.belongsTo(db.Key,{ foreignKey: "requester", sourceKey: "id" });
-    }
+        db.Request.belongsTo(db.Key, { foreignKey: 'requester', sourceKey: 'id' });
+    };
     return Request;
-}
+};

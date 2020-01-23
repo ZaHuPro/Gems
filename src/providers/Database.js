@@ -5,7 +5,7 @@
 import path from 'path';
 import fs from 'fs';
 import Sequelize from 'sequelize';
-import Log from '../middlewares/Log';
+import Log from './Log';
 import Locals from './Locals';
 
 export class Database {

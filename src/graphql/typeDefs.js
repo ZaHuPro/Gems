@@ -1,4 +1,5 @@
-import * as apollo from "apollo-server-express";
+import * as apollo from 'apollo-server-express';
+
 const typeDefs = apollo.gql`
 
   type Author {
