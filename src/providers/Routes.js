@@ -1,4 +1,4 @@
-import Log from './Log';
+import Log from '../middlewares/Log';
 
 import rootRouter from '../routes/index';
 

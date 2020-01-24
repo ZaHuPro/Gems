@@ -4,7 +4,7 @@
 // import { ApolloEngine } from 'apollo-engine';
 import { ApolloServer } from 'apollo-server-express';
 import { makeExecutableSchema } from 'graphql-tools';
-import Log from './Log';
+import Log from '../middlewares/Log';
 import typeDefs from '../graphql/typeDefs';
 import resolvers from '../graphql/resolver';
 import context from '../graphql/context';

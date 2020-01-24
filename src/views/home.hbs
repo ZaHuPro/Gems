@@ -1,0 +1,86 @@
+
+  <div class="form-group">
+    <label for="fName">fName</label>
+    <input type="text" class="form-control" id="fName" aria-describedby="emailHelp">
+  </div>
+  <div class="form-group">
+    <label for="age">age</label>
+    <input type="number" class="form-control" id="age">
+  </div>
+  <button type="button" id="set" class="btn btn-primary">Submit</button>
+
+<div id= 'instructor'>
+    
+</div>
+
+
+<script>
+    if(typeof web3 !== 'undefined'){
+        web3 = new Web3(web3.currentProvider)
+    }else{
+        web3 = new Web3(new Web3.providers.HttpProviders( 'http://localhost:7545'))
+    }
+    web3.eth.defaultAccount = web3.eth.accounts[0];
+    console.log(web3.eth.defaultAccount)
+    var CoronamContract = web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_fName",
+				"type": "string"
+			},
+			{
+				"name": "_age",
+				"type": "uint256"
+			}
+		],
+		"name": "setInstructor",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getInstructor",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+])
+var Coronam = CoronamContract.at('0x7B1a7073BfDd8a020082ae559B0E880A0a1B249F')
+console.log(Coronam)
+Coronam.getInstructor(function(error, result){
+    if(!error){
+        $("#instructor").html(result[0] + " (" + result[1] + ")");
+    }else{
+        console.log(error)
+          $("#instructor").html("Not Found");
+    }
+})
+
+$('#set').click(function(){
+    console.log($("#fName").val(), $("#age").val())
+    Coronam.setInstructor($("#fName").val(), $("#age").val())
+}, function(err, setData) {
+  if (!err){
+
+    console.log("data", setData); 
+  }else{
+      console.log("error", err)
+  }
+})
+
+</script>

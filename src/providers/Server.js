@@ -2,10 +2,11 @@
 
 import express from 'express';
 
-import Log from './Log';
+import Log from '../middlewares/Log';
 import Locals from './Locals';
 import GraphQL from './Graphql';
 import Routes from './Routes';
+import Bootstrap from '../middlewares/Kernel';
 
 class Server {
     /**
@@ -14,8 +15,19 @@ class Server {
     constructor() {
         this.express = express();
         this.mountRoutes();
+        this.mountMiddlewares();
     }
 
+    /**
+    * Mounts all the defined middlewares
+    */
+    mountMiddlewares() {
+        this.express = Bootstrap.init(this.express);
+    }
+
+    /**
+    * Mounts all the defined routes
+    */
     mountRoutes() {
         this.express = Routes.mountWeb(this.express);
     }
