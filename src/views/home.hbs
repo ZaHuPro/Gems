@@ -1,86 +1,95 @@
+<div class="form-group">
+  <label for="fName">fName {{address}}</label>
+  <input type="text" class="form-control" id="fName" aria-describedby="emailHelp">
+</div>
+<div class="form-group">
+  <label for="age">age</label>
+  <input type="number" class="form-control" id="age">
+</div>
+<button type="button" id="set" class="btn btn-primary">Submit</button>
 
-  <div class="form-group">
-    <label for="fName">fName</label>
-    <input type="text" class="form-control" id="fName" aria-describedby="emailHelp">
-  </div>
-  <div class="form-group">
-    <label for="age">age</label>
-    <input type="number" class="form-control" id="age">
-  </div>
-  <button type="button" id="set" class="btn btn-primary">Submit</button>
+<div id='instructor'>
 
-<div id= 'instructor'>
-    
 </div>
 
 
 <script>
-    if(typeof web3 !== 'undefined'){
-        web3 = new Web3(web3.currentProvider)
-    }else{
-        web3 = new Web3(new Web3.providers.HttpProviders( 'http://localhost:7545'))
+  var LotteryJSON;
+  var Lottery;
+  $.getJSON('/contracts/LuckyDraw.json', function (data) {
+    LotteryJSON = data
+
+    if (typeof web3 !== 'undefined') {
+      web3 = new Web3(web3.currentProvider)
+    } else {
+      web3 = new Web3(new Web3.providers.HttpProviders('http://localhost:7545'))
     }
     web3.eth.defaultAccount = web3.eth.accounts[0];
+    var receiverAddress = web3.eth.defaultAccount;
     console.log(web3.eth.defaultAccount)
-    var CoronamContract = web3.eth.contract([
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_fName",
-				"type": "string"
-			},
-			{
-				"name": "_age",
-				"type": "uint256"
-			}
-		],
-		"name": "setInstructor",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "getInstructor",
-		"outputs": [
-			{
-				"name": "",
-				"type": "string"
-			},
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	}
-])
-var Coronam = CoronamContract.at('0x7B1a7073BfDd8a020082ae559B0E880A0a1B249F')
-console.log(Coronam)
-Coronam.getInstructor(function(error, result){
-    if(!error){
-        $("#instructor").html(result[0] + " (" + result[1] + ")");
-    }else{
-        console.log(error)
-          $("#instructor").html("Not Found");
-    }
-})
 
-$('#set').click(function(){
-    console.log($("#fName").val(), $("#age").val())
-    Coronam.setInstructor($("#fName").val(), $("#age").val())
-}, function(err, setData) {
-  if (!err){
+    var LotteryContract = web3.eth.contract(LotteryJSON.abi)
+    Lottery = LotteryContract.at(LotteryJSON.networks['5777'].address)
 
-    console.log("data", setData); 
-  }else{
-      console.log("error", err)
-  }
-})
+
+
+    Lottery.productCount(function (err, res) {
+      var countIs = web3.fromWei(res.toNumber(), "ether")
+      console.log("instructorinstructor = ", countIs)
+      $("#instructor").html(countIs)
+    });
+
+
+
+
+
+    $('#set').click(function () {
+
+      //console.log(Lottery)
+
+      var setData = Lottery.createProduct.getData("Test", 10, 5);
+
+      console.log(setData);
+      web3.eth.estimateGas({
+        from: receiverAddress,
+        to: LotteryJSON.networks['5777'].address,
+        data: setData
+      }, function (err, gasEstimate) {
+        if (!err)
+
+          web3.eth.getGasPrice(function (error, gasPrice) {
+
+            console.log('gas Price: ' + gasPrice);
+            console.log('Estimated Transaction gas: ' + gasEstimate, Lottery);
+
+            web3.eth.sendTransaction({
+              from: receiverAddress,
+              to: LotteryJSON.networks['5777'].address,
+              data: setData,
+              gasPrice: gasPrice,
+              gas: gasEstimate
+            }, function (err, data) {
+              console.log(err, data)
+            })
+
+            /*Lottery.createProduct("Test", 10, 5).send({
+              from: receiverAddress,
+              to: LotteryJSON.networks['5777'].address,
+              gasPrice: gasPrice,
+              gas: gasEstimate
+            }, function (error, createProductData) {
+              console.log(createProductData)
+            }) */
+
+
+
+          })
+
+      })
+
+
+    });
+
+  });
 
 </script>

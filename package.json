@@ -8,7 +8,8 @@
     "watch": "nodemon --watch src -r @babel/register ./src/index.js",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
-    "test": "jest"
+    "test": "jest",
+    "migrate:dev": "truffle migrate --network development"
   },
   "repository": {
     "type": "git",

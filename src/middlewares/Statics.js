@@ -16,7 +16,10 @@ class Statics {
         const options = { maxAge: 31557600000 };
 
         // Load Statics
-        _express.use('/public', express.static(path.join(__dirname, '../../public'), options));
+        _express.use('/public', express.static(path.join(__dirname, '../../public')));
+
+        // Load Contract
+        _express.use('/contracts', express.static(path.join(__dirname, '../../build/contracts')));
 
         // Load NPM Statics
         _express.use('/vendor', express.static(path.join(__dirname, '../../node_modules'), options));
