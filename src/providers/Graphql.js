@@ -5,8 +5,8 @@
 import { ApolloServer } from 'apollo-server-express';
 import { makeExecutableSchema } from 'graphql-tools';
 import Log from '../middlewares/Log';
-import typeDefs from '../graphql/typeDefs';
-import resolvers from '../graphql/resolver';
+import typeDefs from '../graphql/typeDefs/index';
+import resolvers from '../graphql/resolvers/index';
 import context from '../graphql/context';
 // import Locals from './Locals';
 

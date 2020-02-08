@@ -6,8 +6,6 @@ import compress from 'compression';
 import express from 'express';
 import userAgent from 'express-useragent';
 import ipware from 'ipware';
-import hbs from 'express-handlebars';
-import path from 'path';
 import Log from './Log';
 import Locals from '../providers/Locals';
 
@@ -42,16 +40,6 @@ class Http {
             req.requestIp = get_ip(req);
             next();
         });
-
-        // HandleBar engine for temp
-        _express.set('views', path.join(__dirname, '../views/'));
-        _express.set('view engine', 'hbs');
-        _express.engine('hbs', hbs({
-            extname: 'hbs',
-            defaultView: 'main',
-            layoutsDir: path.join(__dirname, '../views/layouts/'),
-            partialsDir: path.join(__dirname, '../views/partials/'),
-        }));
 
         return _express;
     }

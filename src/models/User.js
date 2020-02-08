@@ -7,15 +7,23 @@ module.exports = function Model(sequelize, DataTypes) {
             primaryKey: true,
             field: 'id',
         },
-        first_name: {
+        firstName: {
             type: DataTypes.STRING,
             allowNull: true,
         },
-        last_name: {
+        lastName: {
             type: DataTypes.STRING,
             allowNull: true,
         },
         email: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true,
+            validate: {
+                notEmpty: true,
+            },
+        },
+        userName: {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true,
@@ -37,11 +45,23 @@ module.exports = function Model(sequelize, DataTypes) {
                 notEmpty: true,
             },
         },
-        email_verify: {
+        emailVerified: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
         },
-        joined_ip: {
+        joinedIP: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        avatarName: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        avatarTitle: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        avatarPath: {
             type: DataTypes.STRING,
             allowNull: true,
         },

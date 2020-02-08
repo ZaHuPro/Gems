@@ -27,6 +27,16 @@ export class Database {
             });
     }
 
+    async reSync() {
+        try {
+            await this.models.sequelize.drop();
+            await this.models.sequelize.sync({ force: true });
+        } catch (error) {
+            Log.info(`Failed to reSync DB!! (${error})`);
+            throw error;
+        }
+    }
+
     syncModels() {
         const db = {};
         const modelDirectory = path.join(Locals.config().root, '/src/models/');

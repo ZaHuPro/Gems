@@ -43,19 +43,21 @@ class UserModule {
         {
             email,
             password,
-            first_name,
-            last_name,
+            userName,
+            firstName,
+            lastName,
         },
         requestIp,
     ) {
         const hashed = await authyModule.createHash(password);
         const returnData = await DB.models.User.create({
             email,
-            first_name,
-            last_name,
+            firstName,
+            lastName,
+            userName,
             password: hashed.password,
             salt: hashed.salt,
-            joined_ip: requestIp.clientIp,
+            joinedIP: requestIp.clientIp,
         });
         return returnData;
     }
