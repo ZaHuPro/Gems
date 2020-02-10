@@ -1,6 +1,6 @@
 
 module.exports = function Model(sequelize, DataTypes) {
-    const Key = sequelize.define('key', {
+    const Category = sequelize.define('category', {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
@@ -14,25 +14,39 @@ module.exports = function Model(sequelize, DataTypes) {
                 notEmpty: true,
             },
         },
-        website: {
+        description: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
                 notEmpty: true,
             },
         },
-        key: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
-            primaryKey: true,
-            field: 'id',
+        imageName: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+            },
+        },
+        imageTitle: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+            },
+        },
+        imagePath: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+            },
         },
         status: {
             type: DataTypes.ENUM,
             values: [
                 'active',
-                'inactive',
-                'removed',
+                'deleted',
             ],
             defaultValue: 'active',
         },
@@ -41,9 +55,8 @@ module.exports = function Model(sequelize, DataTypes) {
         freezeTableName: true,
     });
 
-    Key.associate = function associate(db) {
-        db.Key.belongsTo(db.User, { foreignKey: 'keyed', sourceKey: 'id' });
-        db.Key.hasMany(db.Request, { foreignKey: 'requester', sourceKey: 'id' });
+    Category.associate = function associate(db) {
+        db.Category.hasMany(db.Product, { sourceKey: 'id' });
     };
-    return Key;
+    return Category;
 };

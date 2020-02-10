@@ -14,7 +14,7 @@ class AuthyModule {
         };
     }
 
-    static async verifyHash(hash, password, salt) {
+    static async verifyHash(password, salt, hash) {
         return await MD5(MD5(password) + salt) === hash;
     }
 

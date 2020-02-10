@@ -80,7 +80,8 @@ module.exports = function Model(sequelize, DataTypes) {
     });
 
     User.associate = function associate(db) {
-        db.User.hasMany(db.Key, { foreignKey: 'keyed', sourceKey: 'id' });
+        db.User.hasMany(db.AuctionHistory, { sourceKey: 'id' });
+        db.User.hasMany(db.LottryHistory, { sourceKey: 'id' });
         db.User.hasMany(db.LoginToken, { foreignKey: 'logger', sourceKey: 'id' });
     };
     return User;

@@ -25,7 +25,7 @@ class UserModule {
             where: {
                 email: _email,
             },
-        }).then((userIs) => (userIs.id ? userIs : {}));
+        }).then((userIs) => (userIs && userIs.id ? userIs : {}));
         return returnData;
     }
 

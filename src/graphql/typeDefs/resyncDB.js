@@ -1,6 +1,6 @@
 export const mutations = `
   extend type Query {
-    resyncDB: LoginResult
+    resyncDB: Responce
   }
 `;
 

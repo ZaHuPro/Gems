@@ -2,8 +2,8 @@
  * Bootstrap your App
  *
  */
-
 import App from './providers/App';
+
 /*
  * clear Console
  */

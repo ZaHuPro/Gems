@@ -3,7 +3,12 @@ module.exports = {
     es6: true,
     node: true
   },
-  extends: ["airbnb-base"],
+  extends: ["airbnb-base", "plugin:import/errors", "plugin:import/warnings"],
+  settings: {
+    "import/resolver": {
+      "babel-module": {}
+    }
+  },
   globals: {
     Atomics: "readonly",
     SharedArrayBuffer: "readonly"

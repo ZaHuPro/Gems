@@ -1,5 +1,5 @@
-import Query from './query/index';
-import Mutation from './mutation/index';
+import Query from '@resolvers/_query';
+import Mutation from '@resolvers/_mutation';
 
 export default {
     Query,
