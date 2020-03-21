@@ -1,6 +1,6 @@
 import generator from 'generate-password';
 
-class CommonModule {
+export default class commonModule {
     static async randomGenerator(size) {
         const returnData = await generator.generate({
             length: size,
@@ -12,5 +12,3 @@ class CommonModule {
         return returnData;
     }
 }
-
-export default CommonModule;

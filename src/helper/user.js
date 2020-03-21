@@ -39,8 +39,7 @@ class UserModule {
         return returnData;
     }
 
-    static async createUser(
-        {
+    static async createUser({
             email,
             password,
             userName,

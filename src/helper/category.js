@@ -1,33 +1,53 @@
 import DB from '@providers/Database';
 
-export async function FindOne(payload) {
-    const returnData = await DB.models.Category.findOne(payload);
-    return returnData.id ? returnData : {};
-}
+export default class categoryModule {
+    static async findOne(payload) {
+        const payLoad = payload.where ? payload : { where: {} };
+        payLoad.where.status = 'active';
+        const returnData = await DB.models.Category.findOne(payLoad);
+        return returnData.id ? returnData : {};
+    }
 
-export async function FindAll(payload) {
-    const returnData = await DB.models.Category.findAll(payload);
-    return returnData.length > 0 ? returnData : [];
-}
+    static async findAll(payload) {
+        const payLoad = payload.where ? payload : { where: {} };
+        payLoad.where.status = 'active';
+        const returnData = await DB.models.Category.findAll(payLoad);
+        return returnData.length > 0 ? returnData : [];
+    }
 
-export async function Count(payload) {
-    return (
-        (await DB.models.User.count(payload)) > 0
-    );
-}
+    static async count(where) {
+        return (
+            (await DB.models.Category.count({ where })) > 0
+        );
+    }
 
-export async function Create(payload) {
-    const returnData = await DB.models.Category.create(payload);
-    return returnData.id ? returnData : {};
-}
+    static async create(payload) {
+        const returnData = await DB.models.Category.create(payload);
+        return returnData.id ? returnData : {};
+    }
 
-export async function Update(payload) {
-    const returnData = await DB.models.Category.update(payload);
-    return !!returnData[0];
-}
+    static async update(payload) {
+        const returnData = await DB.models.Category.update(payload);
+        return !!returnData[0];
+    }
 
+    static async delete(id, status) {
+        const returnData = await DB.models.Category.update({
+            status,
+        }, {
+            where: {
+                id,
+            },
+        });
+        return returnData;
+    }
 
-export async function Destroy(conditions) {
-    const returnData = await DB.models.User.destroy(conditions);
-    return returnData;
+    static async destroy(id) {
+        const returnData = await DB.models.Category.destroy({
+            where: {
+                id,
+            },
+        });
+        return returnData;
+    }
 }

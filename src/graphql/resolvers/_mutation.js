@@ -1,5 +1,11 @@
 import { login, register } from '@source/Auth';
-import { createCategory, updateCategory, deleteCategory } from '@source/Category';
+import {
+    createCategory, updateCategory, deleteCategory, restoreCategory,
+} from '@source/Category';
+
+import {
+    createProduct, updateProduct, deleteProduct, restoreProduct,
+} from '@source/Product';
 
 
 export default {
@@ -8,4 +14,9 @@ export default {
     createCategory,
     updateCategory,
     deleteCategory,
+    restoreCategory,
+    createProduct,
+    updateProduct,
+    deleteProduct,
+    restoreProduct,
 };

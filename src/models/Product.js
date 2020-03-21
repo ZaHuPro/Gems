@@ -26,28 +26,16 @@ module.exports = function Model(sequelize, DataTypes) {
             defaultValue: 0,
         },
         shippingPrice: {
+            type: DataTypes.DOUBLE,
+            defaultValue: 0,
+        },
+        stack: {
             type: DataTypes.INTEGER,
             defaultValue: 0,
         },
-        fuelDiscount: {
+        sold: {
             type: DataTypes.INTEGER,
             defaultValue: 0,
-        },
-        discountFor: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0,
-        },
-        advantage: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0,
-        },
-        startAt: {
-            type: DataTypes.DATE,
-            defaultValue: new Date(),
-        },
-        countDown: {
-            type: DataTypes.INTEGER,
-            defaultValue: 60,
         },
         status: {
             type: DataTypes.ENUM,

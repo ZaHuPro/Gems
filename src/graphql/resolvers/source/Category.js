@@ -1,20 +1,15 @@
-import {
-    Count, Update, Create, Destroy, FindAll, FindOne,
-} from '@helper/category';
+import categoryModule from '@helper/category';
+
 
 export async function createCategory(_, {
     title,
     description,
-    imageName,
-    imageTitle,
-    imagePath,
+    icon,
 }) {
-    const create = await Create({
+    const create = await categoryModule.create({
         title,
         description,
-        imageName,
-        imageTitle,
-        imagePath,
+        icon,
     });
     return create;
 }
@@ -23,21 +18,17 @@ export async function updateCategory(_, {
     id,
     title,
     description,
-    imageName,
-    imageTitle,
-    imagePath,
+    icon,
 }) {
-    if (await Count({
+    if (await categoryModule.count({
         where: {
             id,
         },
     })) {
-        await Update({
+        await categoryModule.update({
             title,
             description,
-            imageName,
-            imageTitle,
-            imagePath,
+            icon,
         }, {
             where: {
                 id,
@@ -55,14 +46,7 @@ export async function updateCategory(_, {
 }
 
 export async function deleteCategory(_, { id }) {
-    if (await Count({
-        where: {
-            id,
-        },
-    })) {
-        await Destroy({
-            id,
-        });
+    if (await categoryModule.count({ id, status: 'active' }) && await categoryModule.delete(id, 'deleted')) {
         return {
             success: true,
             msg: 'Deleted Successfully',
@@ -70,7 +54,20 @@ export async function deleteCategory(_, { id }) {
     }
     return {
         success: true,
-        msg: 'Invalid ID',
+        msg: 'Error of deleting',
+    };
+}
+
+export async function restoreCategory(_, { id }) {
+    if (await categoryModule.count({ id, status: 'deleted' }) && await categoryModule.delete(id, 'active')) {
+        return {
+            success: true,
+            msg: 'Restored Successfully',
+        };
+    }
+    return {
+        success: true,
+        msg: 'Error of restoring',
     };
 }
 
@@ -78,22 +75,18 @@ export async function deleteCategory(_, { id }) {
 // Query are here
 
 export async function allCategory() {
-    const allData = await FindAll();
+    const allData = await categoryModule.findAll({});
     return allData;
 }
 
 export async function singleCategory(_, { id }) {
-    if (!await Count({
-        where: {
-            id,
-        },
-    })) {
+    if (!await categoryModule.count({ id, status: 'active' })) {
         throw new Error('Invalid ID');
     }
-    const Data = await FindOne({
+    const singleData = await categoryModule.findOne({
         where: {
             id,
         },
     });
-    return Data;
+    return singleData;
 }

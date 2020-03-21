@@ -1,43 +1,41 @@
-import {
-    Count, Update, Create, Destroy, FindAll, FindOne,
-} from '@helper/category';
+import productModule from '@helper/product';
 
-export async function createCategory(_, {
+export async function createProduct(_, {
     title,
     description,
-    imageName,
-    imageTitle,
-    imagePath,
+    retailPrice,
+    shippingPrice,
+    stack,
 }) {
-    const create = await Create({
+    const create = await productModule.create({
         title,
         description,
-        imageName,
-        imageTitle,
-        imagePath,
+        retailPrice,
+        shippingPrice,
+        stack,
     });
     return create;
 }
 
-export async function updateCategory(_, {
+export async function updateProduct(_, {
     id,
     title,
     description,
-    imageName,
-    imageTitle,
-    imagePath,
+    retailPrice,
+    shippingPrice,
+    stack,
 }) {
-    if (await Count({
+    if (await productModule.count({
         where: {
             id,
         },
     })) {
-        await Update({
+        await productModule.update({
             title,
             description,
-            imageName,
-            imageTitle,
-            imagePath,
+            retailPrice,
+            shippingPrice,
+            stack,
         }, {
             where: {
                 id,
@@ -54,17 +52,8 @@ export async function updateCategory(_, {
     };
 }
 
-export async function deleteCategory(_, { id }) {
-    if (await Count({
-        where: {
-            id,
-        },
-    })) {
-        await Destroy({
-            where: {
-                id,
-            },
-        });
+export async function deleteProduct(_, { id }) {
+    if (await productModule.count({ id, status: 'active' }) && await productModule.delete(id, 'deleted')) {
         return {
             success: true,
             msg: 'Deleted Successfully',
@@ -72,30 +61,39 @@ export async function deleteCategory(_, { id }) {
     }
     return {
         success: true,
-        msg: 'Invalid ID',
+        msg: 'Error of deleting',
+    };
+}
+
+export async function restoreProduct(_, { id }) {
+    if (await productModule.count({ id, status: 'deleted' }) && await productModule.delete(id, 'active')) {
+        return {
+            success: true,
+            msg: 'Restored Successfully',
+        };
+    }
+    return {
+        success: true,
+        msg: 'Error of restoring',
     };
 }
 
 
 // Query are here
 
-export async function allCategory() {
-    const allData = await FindAll();
+export async function allProduct() {
+    const allData = await productModule.findAll({});
     return allData;
 }
 
-export async function singleCategory(_, { id }) {
-    if (!await Count({
-        where: {
-            id,
-        },
-    })) {
+export async function singleProduct(_, { id }) {
+    if (!await productModule.count({ id, status: 'active' })) {
         throw new Error('Invalid ID');
     }
-    const Data = await FindOne({
+    const singleData = await productModule.findOne({
         where: {
             id,
         },
     });
-    return Data;
+    return singleData;
 }

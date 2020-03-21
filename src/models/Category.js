@@ -21,21 +21,7 @@ module.exports = function Model(sequelize, DataTypes) {
                 notEmpty: true,
             },
         },
-        imageName: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                notEmpty: true,
-            },
-        },
-        imageTitle: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                notEmpty: true,
-            },
-        },
-        imagePath: {
+        icon: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {

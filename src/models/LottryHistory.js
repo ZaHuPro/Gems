@@ -1,6 +1,6 @@
 
 module.exports = function Model(sequelize, DataTypes) {
-    const LottryHistory = sequelize.define('lottry_history', {
+    const LottryHistory = sequelize.define('lottery_history', {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,

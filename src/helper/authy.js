@@ -5,7 +5,7 @@ import Locals from '../providers/Locals';
 
 import errorMsg from '../utils/error-messages';
 
-class AuthyModule {
+export default class authyModule {
     static async createHash(_password) {
         const salt = await commonModule.randomGenerator(10);
         return {
@@ -18,7 +18,10 @@ class AuthyModule {
         return await MD5(MD5(password) + salt) === hash;
     }
 
-    static async createLoginToken({ requestIp, useragent }, userID) {
+    static async createLoginToken({
+        requestIp,
+        useragent,
+    }, userID) {
         const hashkey = MD5(MD5(new Date().getTime()) + Locals.config().appSecret);
         await DB.models.LoginToken.create({
             hashkey,
@@ -46,7 +49,8 @@ class AuthyModule {
                 success: true,
                 userData,
             };
-        } if (tokenData.id && tokenData.status !== 'active') {
+        }
+        if (tokenData.id && tokenData.status !== 'active') {
             return {
                 success: false,
                 msg: errorMsg.tokenExpired,
@@ -69,5 +73,3 @@ class AuthyModule {
         return tokenData;
     }
 }
-
-export default AuthyModule;

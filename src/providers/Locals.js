@@ -15,9 +15,9 @@ class Locals {
         const maxUploadLimit = process.env.APP_MAX_UPLOAD_LIMIT || '50mb';
         const maxParameterLimit = process.env.APP_MAX_PARAMETER_LIMIT || '5000';
         const mysqlDB = {
-            username: process.env.DB_USERNAME || 'cube',
-            password: process.env.DB_PASSWORD || 'square',
-            database: process.env.DB_DATABASE || 'portal',
+            username: process.env.DB_USERNAME || 'root',
+            password: process.env.DB_PASSWORD || '',
+            database: process.env.DB_DATABASE || 'lotaree',
             host: process.env.DB_HOST || 'localhost',
             dialect: process.env.DB_DIALECT || 'mysql',
             logging:
