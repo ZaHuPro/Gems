@@ -25,6 +25,18 @@ export const types = `
     emailVerified: String
     token: String
   }
+
+  type UserView {
+    id: ID
+    firstName: String
+    lastName: String
+    email: String
+    userName: String
+    avatarName: String
+    avatarTitle: String
+    avatarPath: String
+    emailVerified: String
+  }
 `;
 
 export default types + mutations;

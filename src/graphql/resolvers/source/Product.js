@@ -6,6 +6,7 @@ export async function createProduct(_, {
     retailPrice,
     shippingPrice,
     stack,
+    categoryId,
 }) {
     const create = await productModule.create({
         title,
@@ -13,6 +14,7 @@ export async function createProduct(_, {
         retailPrice,
         shippingPrice,
         stack,
+        categoryId,
     });
     return create;
 }
@@ -24,6 +26,7 @@ export async function updateProduct(_, {
     retailPrice,
     shippingPrice,
     stack,
+    categoryId,
 }) {
     if (await productModule.count({
         where: {
@@ -36,6 +39,7 @@ export async function updateProduct(_, {
             retailPrice,
             shippingPrice,
             stack,
+            categoryId,
         }, {
             where: {
                 id,

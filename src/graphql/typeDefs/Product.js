@@ -1,7 +1,7 @@
 export const mutations = `
     extend type Mutation {
         createProduct(title: String!, description: String!, retailPrice: Float!, shippingPrice: Float!, stack: Int!, categoryId: String!): Product
-        updateProduct(id: ID!, title: String, description: String, retailPrice: Float!, shippingPrice: Float!, stack: Int!): Responce
+        updateProduct(id: ID!, title: String, description: String, retailPrice: Float!, shippingPrice: Float!, stack: Int!, categoryId: String!): Responce
         deleteProduct(id: ID!): Responce
         restoreProduct(id: ID!): Responce
     }
@@ -22,6 +22,7 @@ export const types = `
         stack: Int
         sold: Int
         category: Category
+        auctions: [Auction]
     }
 `;
 

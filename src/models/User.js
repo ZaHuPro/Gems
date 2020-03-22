@@ -83,6 +83,7 @@ module.exports = function Model(sequelize, DataTypes) {
         db.User.hasMany(db.AuctionHistory, { sourceKey: 'id' });
         db.User.hasMany(db.LottryHistory, { sourceKey: 'id' });
         db.User.hasMany(db.LoginToken, { foreignKey: 'logger', sourceKey: 'id' });
+        db.User.hasMany(db.Auction, { foreignKey: 'winnerId', sourceKey: 'id' });
     };
     return User;
 };

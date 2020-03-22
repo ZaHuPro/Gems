@@ -7,26 +7,43 @@ module.exports = function Model(sequelize, DataTypes) {
             primaryKey: true,
             field: 'id',
         },
-        spent: {
+        primarySpent: {
             type: DataTypes.INTEGER,
             defaultValue: 0,
         },
-        auctionPrice: {
+        secondarySpent: {
             type: DataTypes.INTEGER,
             defaultValue: 0,
         },
-        advantageGained: {
+        tertiarySpent: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+        },
+        totalSpent: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+        },
+        currentCost: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+        },
+        currentPrice: {
+            type: DataTypes.DOUBLE,
+            defaultValue: 0,
+        },
+        tertiaryGained: {
             type: DataTypes.INTEGER,
             defaultValue: 0,
         },
         stage: {
             type: DataTypes.ENUM,
             values: [
-                'fuel',
-                'intervel',
-                'lanuch',
+                'upcoming',
+                'feed',
+                'grow',
+                'hunt',
             ],
-            defaultValue: 'fuel',
+            defaultValue: 'feed',
         },
     }, {
         timestamps: true,

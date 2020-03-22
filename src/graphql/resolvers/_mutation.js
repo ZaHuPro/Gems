@@ -7,6 +7,11 @@ import {
     createProduct, updateProduct, deleteProduct, restoreProduct,
 } from '@source/Product';
 
+import {
+    createAuction, updateAuction,
+} from '@source/Auction';
+
+import { createAuctionHistory } from '@source/AuctionHistory';
 
 export default {
     register,
@@ -19,4 +24,7 @@ export default {
     updateProduct,
     deleteProduct,
     restoreProduct,
+    createAuction,
+    updateAuction,
+    createAuctionHistory,
 };

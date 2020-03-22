@@ -21,45 +21,53 @@ module.exports = function Model(sequelize, DataTypes) {
                 notEmpty: true,
             },
         },
-        fuelCost: {
+        feedCapacity: {
             type: DataTypes.INTEGER,
             defaultValue: 0,
         },
-        fuelDiscount: {
+        priceIncrement: {
+            type: DataTypes.DOUBLE,
+            defaultValue: 0,
+        },
+        tertiaryGaining: {
             type: DataTypes.INTEGER,
             defaultValue: 0,
         },
-        discountFor: {
+        feedCost: {
             type: DataTypes.INTEGER,
             defaultValue: 0,
         },
-        advantage: {
+        huntingCost: {
             type: DataTypes.INTEGER,
             defaultValue: 0,
         },
-        fuelAt: {
-            type: DataTypes.DATE,
-            defaultValue: new Date(),
-        },
-        intervalMin: {
+        growTime: {
             type: DataTypes.INTEGER,
             defaultValue: 60,
         },
-        lanuchAt: {
+        huntTime: {
+            type: DataTypes.INTEGER,
+            defaultValue: 60,
+        },
+        startsAt: {
             type: DataTypes.DATE,
             defaultValue: new Date(),
         },
-        countDown: {
+        closingAt: {
+            type: DataTypes.DATE,
+            defaultValue: new Date(),
+        },
+        preBookingDiscount: {
             type: DataTypes.INTEGER,
-            defaultValue: 60,
+            defaultValue: 0,
         },
         status: {
             type: DataTypes.ENUM,
             values: [
-                'fuel',
-                'intervel',
-                'lanuch',
                 'upcoming',
+                'feed',
+                'grow',
+                'hunt',
                 'closed',
                 'sold',
             ],
@@ -73,7 +81,7 @@ module.exports = function Model(sequelize, DataTypes) {
     Auction.associate = function associate(db) {
         db.Auction.hasMany(db.AuctionHistory, { sourceKey: 'id' });
         db.Auction.belongsTo(db.Product, { sourceKey: 'id' });
-        db.Auction.belongsTo(db.User, { sourceKey: 'id' });
+        db.Auction.belongsTo(db.User, { foreignKey: 'winnerId', sourceKey: 'id' });
     };
     return Auction;
 };

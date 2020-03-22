@@ -40,14 +40,13 @@ class UserModule {
     }
 
     static async createUser({
-            email,
-            password,
-            userName,
-            firstName,
-            lastName,
-        },
-        requestIp,
-    ) {
+        email,
+        password,
+        userName,
+        firstName,
+        lastName,
+    },
+    requestIp) {
         const hashed = await authyModule.createHash(password);
         const returnData = await DB.models.User.create({
             email,
